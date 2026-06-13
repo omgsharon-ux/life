@@ -337,7 +337,8 @@ color: #555;
 .nutrition-label {
     width: min(480px, 100%);
     background: transparent;
-    border: 5px solid #111;
+    border: 5px solid #7087AD;
+    border-radius: 16px;
     padding: 6px;
     box-shadow: none;
     margin: 0 auto;
@@ -349,13 +350,14 @@ color: #555;
 .nutrition-panel {
     background: #fff;
     padding: 16px 14px 12px;
+    border-radius: 12px;
 }
 
 .nutrition-top {
     display: flex;
     flex-direction: column;
     gap: 2px;
-    border-bottom: 6px solid #111;
+    border-bottom: 6px solid #7087AD;
     padding-bottom: 8px;
     margin-bottom: 10px;
 }
@@ -377,7 +379,7 @@ color: #555;
     justify-content: space-between;
     align-items: baseline;
     padding: 10px 0;
-    border-bottom: 6px solid #111;
+    border-bottom: 6px solid #7087AD;
     font-size: 28px;
     font-weight: 900;
 }
@@ -397,7 +399,7 @@ color: #555;
 
 .nutrition-row-bold {
     font-weight: 900;
-    border-top: 4px solid #111;
+    border-top: 4px solid #7087AD;
     margin-top: 6px;
     padding-top: 8px;
 }
