@@ -197,7 +197,7 @@ margin-left: calc(-50vw + 50%);
 }
 
 .recipe-detail-header::after {
-content: “”;
+    content: "";
 position: absolute;
 inset: 0;
 background: linear-gradient(
@@ -269,7 +269,7 @@ border-radius: 8px;
 border-left: 4px solid transparent;
 }
 
-.check-item input[type=“checkbox”] {
+.check-item input[type="checkbox"] {
 width: 28px;
 height: 28px;
 margin-top: 2px;
@@ -282,16 +282,19 @@ font-size: 24px;
 line-height: 1.4;
 cursor: pointer;
 flex: 1;
+    transition: color 220ms ease, opacity 220ms ease;
 }
 
-input[type=“checkbox”]:checked + label {
+input[type="checkbox"]:checked + label {
 text-decoration: line-through;
-color: #999;
+    color: #777;
+    opacity: 0.45;
 }
 
-input[type=“checkbox”]:checked + .step-num + label {
+input[type="checkbox"]:checked + .step-num + label {
 text-decoration: line-through;
-color: #999;
+    color: #777;
+    opacity: 0.45;
 }
 
 .step-num {
