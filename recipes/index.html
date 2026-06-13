@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Recipes</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header>
+    <div class="header-banner">My Recipes</div>
+</header>
+
+<main>
+    <div id="search-wrap">
+        <input
+            type="search"
+            id="search"
+            placeholder="Search recipes…"
+            aria-label="Search recipes"
+            autocomplete="off"
+            autocorrect="off"
+            autocapitalize="off"
+            spellcheck="false"
+        >
+    </div>
+
+    <div id="category-wrap"></div>
+    <div id="count"></div>
+
+    <ul id="recipe-list"></ul>
+    <p id="no-results">No recipes found.</p>
+</main>
+
+<script>
+let recipes = [];
+let activeCategory = "All";
+
+const list = document.getElementById("recipe-list");
+const noResults = document.getElementById("no-results");
+const search = document.getElementById("search");
+const countEl = document.getElementById("count");
+const catWrap = document.getElementById("category-wrap");
+
+const placeholders = [
+    { bg: "#B5C2D7", emoji: "🍗" },
+    { bg: "#B5C2D7", emoji: "🥗" },
+    { bg: "#B5C2D7", emoji: "🥩" },
+    { bg: "#B5C2D7", emoji: "🍤" },
+    { bg: "#B5C2D7", emoji: "🥚" },
+    { bg: "#B5C2D7", emoji: "🌶️" },
+    { bg: "#B5C2D7", emoji: "🐟" },
+    { bg: "#B5C2D7", emoji: "🍲" }
+];
+
+function getPlaceholder(name) {
+    let hash = 0;
+
+    for (let i = 0; i < name.length; i++) {
+        hash = (hash * 31 + name.charCodeAt(i)) & 0xffffffff;
+    }
+
+    return placeholders[Math.abs(hash) % placeholders.length];
+}
+
+function buildCategories() {
+    const categories = [
+        "All",
+        ...new Set(
+            recipes
+                .map(recipe => recipe.category || "Other")
+                .filter(Boolean)
+        )
+    ].sort((a, b) => {
+        if (a === "All") return -1;
+        if (b === "All") return 1;
+        return a.localeCompare(b);
+    });
+
+    catWrap.innerHTML = "";
+
+    categories.forEach(category => {
+        const button = document.createElement("button");
+
+        button.className =
+            "cat-pill" + (category === activeCategory ? " active" : "");
+
+        button.textContent = category;
+
+        button.addEventListener("click", () => {
+            activeCategory = category;
+
+            document
+                .querySelectorAll(".cat-pill")
+                .forEach(btn => btn.classList.remove("active"));
+
+            button.classList.add("active");
+            search.value = "";
+            renderRecipes("");
+        });
+
+        catWrap.appendChild(button);
+    });
+}
+
+function renderRecipes(filter) {
+    const query = (filter || "").trim().toLowerCase();
+
+    let pool = recipes;
+
+    if (activeCategory !== "All") {
+        pool = recipes.filter(recipe =>
+            (recipe.category || "Other") === activeCategory
+        );
+    }
+
+    const matches = query
+        ? pool.filter(recipe =>
+            recipe.title.toLowerCase().includes(query) ||
+            (recipe.category || "").toLowerCase().includes(query)
+        )
+        : pool;
+
+    list.innerHTML = "";
+
+    if (matches.length === 0) {
+        noResults.style.display = "block";
+        countEl.textContent = "";
+        return;
+    }
+
+    noResults.style.display = "none";
+
+    if (activeCategory === "All") {
+        countEl.textContent =
+            matches.length === recipes.length
+                ? recipes.length + " recipes"
+                : matches.length + " of " + recipes.length + " recipes";
+    } else {
+        countEl.textContent =
+            query
+                ? matches.length + " of " + pool.length + " " + activeCategory + " recipes"
+                : pool.length + " " + activeCategory + " recipes";
+    }
+
+    matches.forEach(recipe => {
+        const placeholder = getPlaceholder(recipe.title);
+
+        const li = document.createElement("li");
+        const link = document.createElement("a");
+
+        link.href = "recipe.html?id=" + encodeURIComponent(recipe.id);
+
+        if (recipe.image) {
+            const img = document.createElement("img");
+
+            img.src = recipe.image;
+            img.alt = recipe.title;
+            img.className = "card-img";
+
+            img.onerror = function () {
+                this.style.display = "none";
+
+                const fallback = document.createElement("div");
+                fallback.className = "card-placeholder";
+                fallback.style.background = placeholder.bg;
+                fallback.textContent = placeholder.emoji;
+
+                link.insertBefore(fallback, this.nextSibling);
+            };
+
+            link.appendChild(img);
+        } else {
+            const fallback = document.createElement("div");
+
+            fallback.className = "card-placeholder";
+            fallback.style.background = placeholder.bg;
+            fallback.textContent = placeholder.emoji;
+
+            link.appendChild(fallback);
+        }
+
+        const label = document.createElement("div");
+        label.className = "card-name";
+        label.textContent = recipe.title;
+
+        link.appendChild(label);
+        li.appendChild(link);
+        list.appendChild(li);
+    });
+}
+
+async function loadRecipes() {
+    const response = await fetch("recipes.json");
+
+    if (!response.ok) {
+        throw new Error("Could not load recipes.json");
+    }
+
+    recipes = await response.json();
+
+    recipes.sort((a, b) => a.title.localeCompare(b.title));
+
+    buildCategories();
+    renderRecipes("");
+}
+
+search.addEventListener("input", function () {
+    renderRecipes(this.value);
+});
+
+loadRecipes().catch(error => {
+    console.error(error);
+    countEl.textContent = "Could not load recipes.json.";
+});
+</script>
+
+</body>
+</html>

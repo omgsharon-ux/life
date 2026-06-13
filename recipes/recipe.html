@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipe</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header id="recipe-header" class="recipe-detail-header">
+    <div id="recipe-title" class="header-banner">Loading...</div>
+</header>
+
+<main>
+
+    <a href="index.html" class="back-link">← Back to Recipes</a>
+
+    <div class="ingredients">
+        <h2 class="section-heading">Ingredients</h2>
+        <div id="ingredients-list"></div>
+    </div>
+
+    <div class="preparation">
+        <h2 class="section-heading">Instructions</h2>
+        <div id="instructions-list"></div>
+    </div>
+
+    <div class="notes">
+        <h2 class="section-heading">Notes</h2>
+        <div id="notes" class="notes-body"></div>
+    </div>
+
+    <div class="nutrition">
+        <h2 class="section-heading">Nutrition</h2>
+        <div id="nutrition" class="nutrition-body"></div>
+    </div>
+
+    <button class="reset-button" onclick="resetCheckboxes()">
+        ✓ Reset All Checkboxes
+    </button>
+
+</main>
+
+<footer>
+    Powered by ☕ & 🌮
+</footer>
+
+<script>
+function resetCheckboxes() {
+    document
+        .querySelectorAll('input[type="checkbox"]')
+        .forEach(cb => cb.checked = false);
+}
+
+function showError(message) {
+    document.body.innerHTML = `
+        <main class="error-message">
+            <h1>${message}</h1>
+            <p><a href="index.html">Return to recipe list</a></p>
+        </main>
+    `;
+}
+
+function addCheckItem(container, idPrefix, text) {
+    const index = container.children.length;
+
+    const div = document.createElement("div");
+    div.className = "check-item";
+
+    div.innerHTML = `
+        <input type="checkbox" id="${idPrefix}${index}">
+        <label for="${idPrefix}${index}">${text}</label>
+    `;
+
+    container.appendChild(div);
+}
+
+function addInstructionItem(container, text) {
+    const index = container.children.length;
+
+    const div = document.createElement("div");
+    div.className = "check-item";
+
+    div.innerHTML = `
+        <input type="checkbox" id="step${index}">
+        <span class="step-num">${index + 1}</span>
+        <label for="step${index}">${text}</label>
+    `;
+
+    container.appendChild(div);
+}
+
+async function loadRecipe() {
+    const params = new URLSearchParams(window.location.search);
+    const recipeId = params.get("id");
+
+    if (!recipeId) {
+        showError("Recipe not found");
+        return;
+    }
+
+    const response = await fetch("recipes.json");
+
+    if (!response.ok) {
+        throw new Error("Could not load recipes.json");
+    }
+
+    const recipes = await response.json();
+    const recipe = recipes.find(r => r.id === recipeId);
+
+    if (!recipe) {
+        showError("Recipe not found");
+        return;
+    }
+
+    document.title = recipe.title;
+
+    document.getElementById("recipe-title").textContent = recipe.title;
+
+    if (recipe.image) {
+        document.getElementById("recipe-header").style.backgroundImage =
+            `url('${recipe.image}')`;
+    }
+
+    const ingredientsList = document.getElementById("ingredients-list");
+    const instructionsList = document.getElementById("instructions-list");
+
+    (recipe.ingredients || []).forEach(item => {
+        addCheckItem(ingredientsList, "ing", item);
+    });
+
+    (recipe.instructions || []).forEach(item => {
+        addInstructionItem(instructionsList, item);
+    });
+
+    document.getElementById("notes").textContent =
+        recipe.notes || "No notes available.";
+
+    document.getElementById("nutrition").textContent =
+        recipe.nutrition || "Nutrition information not available.";
+}
+
+loadRecipe().catch(error => {
+    console.error(error);
+    showError("Error loading recipe");
+});
+</script>
+
+</body>
+</html>
