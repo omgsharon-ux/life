@@ -609,40 +609,71 @@ let currentWeekStart = getMonday(today);
 let currentPlan      = {};   // in-memory cache for current week
 let dinnerHistory    = [];   // in-memory cache for history
 
-// ── API CALLS ──
-async function fetchPlan(weekStart) {
+// ── STORAGE LAYER ──
+// Always saves to localStorage immediately (guaranteed persistence).
+// Also syncs to the server/file when available (bonus file backup).
+
+async function load(lsKey, apiPath, fallback) {
+    const local = localStorage.getItem(lsKey);
+    if (local) {
+        // Have local data — return it, then try to sync from server in background
+        try {
+            const res = await fetch(apiPath);
+            if (res.ok) {
+                const server = await res.json();
+                const isEmpty = Array.isArray(server) ? server.length === 0 : Object.keys(server).length === 0;
+                if (!isEmpty) {
+                    localStorage.setItem(lsKey, JSON.stringify(server));
+                    return server;
+                }
+            }
+        } catch {}
+        return JSON.parse(local);
+    }
+    // No local data — try server, otherwise use fallback
     try {
-        const res = await fetch(`/api/plan/${dateKey(weekStart)}`);
-        return res.ok ? await res.json() : {};
-    } catch { return {}; }
+        const res = await fetch(apiPath);
+        if (res.ok) {
+            const data = await res.json();
+            localStorage.setItem(lsKey, JSON.stringify(data));
+            return data;
+        }
+    } catch {}
+    return fallback;
+}
+
+async function save(lsKey, apiPath, data) {
+    // Save to localStorage first — always works
+    localStorage.setItem(lsKey, JSON.stringify(data));
+    // Then try to sync to file via server
+    try {
+        await fetch(apiPath, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(data)
+        });
+    } catch {}
+    flashSaved();
+}
+
+// ── PLAN HELPERS ──
+function planLsKey(weekStart)  { return `life-plan-${dateKey(weekStart)}`; }
+function planApiPath(weekStart) { return `/api/plan/${dateKey(weekStart)}`; }
+
+async function fetchPlan(weekStart) {
+    return load(planLsKey(weekStart), planApiPath(weekStart), {});
 }
 
 async function postPlan(weekStart, plan) {
-    try {
-        await fetch(`/api/plan/${dateKey(weekStart)}`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(plan)
-        });
-        flashSaved();
-    } catch (e) { console.warn("Could not save plan:", e); }
+    await save(planLsKey(weekStart), planApiPath(weekStart), plan);
 }
 
 async function fetchHistory() {
-    try {
-        const res = await fetch("/api/history");
-        return res.ok ? await res.json() : [];
-    } catch { return []; }
+    return load("life-dinner-history", "/api/history", []);
 }
 
 async function postHistory(history) {
-    try {
-        await fetch("/api/history", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(history)
-        });
-    } catch (e) { console.warn("Could not save history:", e); }
+    await save("life-dinner-history", "/api/history", history);
 }
 
 // ── SAVE INDICATOR ──
@@ -960,13 +991,7 @@ async function saveTodos() {
     todoList.querySelectorAll("li").forEach(li => {
         items.push({ text: li.dataset.text, done: li.classList.contains("done") });
     });
-    try {
-        await fetch("/api/todos", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(items)
-        });
-    } catch(e) { console.warn("Could not save todos:", e); }
+    await save("life-todos", "/api/todos", items);
 }
 
 function renderTodo(text, done = false) {
@@ -1016,7 +1041,7 @@ todoInput.addEventListener("keydown", e => { if (e.key === "Enter") addTodo(); }
     const [plan, history, todos] = await Promise.all([
         fetchPlan(currentWeekStart),
         fetchHistory(),
-        fetch("/api/todos").then(r => r.json()).catch(() => [])
+        load("life-todos", "/api/todos", [])
     ]);
     currentPlan   = plan;
     dinnerHistory = history;
