@@ -184,23 +184,36 @@ padding-bottom: 60px;
 RECIPE PAGE
 ========================================================== */
 
-.recipe-top {
-display: flex;
-align-items: flex-start;
-gap: 32px;
+.recipe-grid {
+display: grid;
+grid-template-columns: 1fr 340px;
+grid-template-rows: auto auto;
+gap: 0 32px;
 }
 
-.recipe-top .ingredients {
-flex: 1;
+.recipe-grid .ingredients {
+grid-column: 1;
+grid-row: 1;
+}
+
+#recipe-image-container {
+grid-column: 2;
+grid-row: 1;
+display: flex;
+align-items: flex-start;
+padding-top: 36px;
 }
 
 .recipe-image {
-width: 340px;
-max-width: 100%;
+width: 100%;
 border-radius: 10px;
 object-fit: cover;
-margin-top: 36px;
 box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+}
+
+.recipe-grid .preparation {
+grid-column: 1 / -1;
+grid-row: 2;
 }
 
 header .version-number {
