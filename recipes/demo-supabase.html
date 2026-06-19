@@ -1,0 +1,114 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Recipes & Tasks — Supabase Demo</title>
+  <link rel="stylesheet" href="../styles.css">
+  <style>body{font-family:system-ui,Segoe UI,Roboto,Arial;margin:20px}form{margin-bottom:20px}img.thumb{max-width:160px;display:block;margin-top:8px}</style>
+</head>
+<body>
+  <h1>Supabase Demo — Recipes & Tasks</h1>
+
+  <section>
+    <h2>Recipes</h2>
+    <div id="recipesList">Loading…</div>
+
+    <h3>Add Recipe</h3>
+    <form id="recipeForm">
+      <label>Title<br><input name="title" required></label><br>
+      <label>Ingredients (one per line)<br><textarea name="ingredients" rows="4"></textarea></label><br>
+      <label>Instructions<br><textarea name="instructions" rows="6"></textarea></label><br>
+      <label>Photo<br><input type="file" name="photo" accept="image/*"></label><br>
+      <button type="submit">Add Recipe</button>
+    </form>
+  </section>
+
+  <hr>
+
+  <section>
+    <h2>Tasks</h2>
+    <div id="tasksList">Loading…</div>
+    <h3>Add Task</h3>
+    <form id="taskForm">
+      <label>Title<br><input name="title" required></label><br>
+      <label>Due date<br><input type="date" name="due_date"></label><br>
+      <button type="submit">Add Task</button>
+    </form>
+  </section>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+  <script src="supabase-client.js"></script>
+  <script>
+    async function renderRecipes() {
+      const list = document.getElementById('recipesList');
+      list.textContent = 'Loading...';
+      try {
+        const data = await SUPA.fetchRecipes();
+        if (!data.length) { list.textContent = 'No recipes yet.'; return; }
+        list.innerHTML = '';
+        data.forEach(r => {
+          const div = document.createElement('div');
+          div.innerHTML = `<strong>${r.title}</strong>`;
+          if (r.image_path) {
+            const url = SUPA.getPublicUrl(r.image_path);
+            const img = document.createElement('img'); img.src = url; img.className='thumb'; div.appendChild(img);
+          }
+          const p = document.createElement('p'); p.textContent = (r.ingredients && Array.isArray(r.ingredients)) ? r.ingredients.join(', ') : '';
+          div.appendChild(p);
+          list.appendChild(div);
+        });
+      } catch (e) { list.textContent = 'Error loading recipes'; console.error(e); }
+    }
+
+    async function renderTasks() {
+      const list = document.getElementById('tasksList');
+      list.textContent = 'Loading...';
+      try {
+        const data = await SUPA.fetchTasks();
+        if (!data.length) { list.textContent = 'No tasks yet.'; return; }
+        list.innerHTML = '';
+        data.forEach(t => {
+          const div = document.createElement('div');
+          const cb = document.createElement('input'); cb.type='checkbox'; cb.checked = t.completed;
+          cb.addEventListener('change', async () => { await SUPA.updateTaskCompletion(t.id, cb.checked); renderTasks(); });
+          div.appendChild(cb);
+          const span = document.createElement('span'); span.textContent = ` ${t.title} ${t.due_date ? ' — ' + t.due_date : ''}`;
+          div.appendChild(span);
+          list.appendChild(div);
+        });
+      } catch (e) { list.textContent = 'Error loading tasks'; console.error(e); }
+    }
+
+    document.getElementById('recipeForm').addEventListener('submit', async (ev) => {
+      ev.preventDefault();
+      const f = ev.target;
+      const title = f.title.value.trim();
+      const ingredients = f.ingredients.value.split('\n').map(s=>s.trim()).filter(Boolean);
+      const instructions = f.instructions.value.trim();
+      const file = f.photo.files[0];
+      try {
+        await SUPA.addRecipe({ title, ingredients, instructions }, file);
+        f.reset();
+        await renderRecipes();
+      } catch (e) { alert('Error adding recipe'); console.error(e); }
+    });
+
+    document.getElementById('taskForm').addEventListener('submit', async (ev) => {
+      ev.preventDefault();
+      const f = ev.target;
+      const title = f.title.value.trim();
+      const due_date = f.due_date.value || null;
+      try {
+        await SUPA.addTask(title, due_date);
+        f.reset();
+        await renderTasks();
+      } catch (e) { alert('Error adding task'); console.error(e); }
+    });
+
+    // initial render
+    renderRecipes();
+    renderTasks();
+  </script>
+</body>
+</html>
