@@ -58,7 +58,7 @@
           div.appendChild(p);
           list.appendChild(div);
         });
-      } catch (e) { list.textContent = 'Error loading recipes'; console.error(e); }
+      } catch (e) { list.textContent = 'Error loading recipes: ' + (e?.message || e); console.error(e); }
     }
 
     async function renderTasks() {
@@ -77,7 +77,7 @@
           div.appendChild(span);
           list.appendChild(div);
         });
-      } catch (e) { list.textContent = 'Error loading tasks'; console.error(e); }
+      } catch (e) { list.textContent = 'Error loading tasks: ' + (e?.message || e); console.error(e); }
     }
 
     document.getElementById('recipeForm').addEventListener('submit', async (ev) => {
