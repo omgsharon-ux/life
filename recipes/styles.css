@@ -184,44 +184,23 @@ padding-bottom: 60px;
 RECIPE PAGE
 ========================================================== */
 
-.recipe-detail-header {
-position: relative;
-height: 300px;
-background-size: cover;
-background-position: center;
-background-color: #3B5175;
-overflow: hidden;
-width: 100vw;
-margin-left: calc(-50vw + 50%);
+.recipe-top {
+display: flex;
+align-items: flex-start;
+gap: 32px;
 }
 
-.recipe-detail-header::after {
-    content: "";
-position: absolute;
-inset: 0;
-background: linear-gradient(
-to top,
-rgba(0,0,0,0.72) 0%,
-rgba(0,0,0,0.15) 55%,
-transparent 100%
-);
+.recipe-top .ingredients {
+flex: 1;
 }
 
-.recipe-detail-header .header-banner {
-position: absolute;
-bottom: 0;
-left: 0;
-right: 0;
-height: auto;
-padding: 22px 8%;
-background: none;
-color: white;
-font-size: 32px;
-font-weight: bold;
-text-align: left;
-text-shadow: 0 2px 6px rgba(0,0,0,0.5);
-z-index: 1;
-box-shadow: none;
+.recipe-image {
+width: 340px;
+max-width: 100%;
+border-radius: 10px;
+object-fit: cover;
+margin-top: 36px;
+box-shadow: 0 4px 16px rgba(0,0,0,0.15);
 }
 
 header .version-number {

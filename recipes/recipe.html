@@ -8,7 +8,7 @@
 </head>
 <body>
 
-<header id="recipe-header" class="recipe-detail-header">
+<header id="recipe-header">
     <div id="recipe-title" class="header-banner">Loading...</div>
     <div class="version-number">V.2</div>
 </header>
@@ -17,9 +17,12 @@
 
     <a href="index.html" class="back-link">← Back to Recipes</a>
 
-    <div class="ingredients">
-        <h2 class="section-heading">Ingredients</h2>
-        <div id="ingredients-list"></div>
+    <div class="recipe-top">
+        <div class="ingredients">
+            <h2 class="section-heading">Ingredients</h2>
+            <div id="ingredients-list"></div>
+        </div>
+        <div id="recipe-image-container"></div>
     </div>
 
     <div class="preparation">
@@ -233,8 +236,12 @@ async function loadRecipe() {
     document.getElementById("recipe-title").textContent = recipe.title;
 
     if (recipe.image) {
-        document.getElementById("recipe-header").style.backgroundImage =
-            `url('${recipe.image}')`;
+        const imgContainer = document.getElementById("recipe-image-container");
+        const img = document.createElement("img");
+        img.src = recipe.image;
+        img.alt = recipe.title;
+        img.className = "recipe-image";
+        imgContainer.appendChild(img);
     }
 
     const ingredientsList = document.getElementById("ingredients-list");
