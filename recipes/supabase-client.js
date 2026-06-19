@@ -28,6 +28,8 @@ async function addRecipe(recipe, file) {
 }
 
 function getPublicUrl(path) {
+  if (!path) return null;
+  if (/^https?:\/\//.test(path)) return path;
   if (!supabaseClient) return null;
   const { data } = supabaseClient.storage.from('dashboard').getPublicUrl(path);
   return data?.publicUrl || null;

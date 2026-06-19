@@ -47,6 +47,28 @@ CREATE POLICY "auth delete tasks" ON tasks FOR DELETE USING (auth.role() = 'auth
 
 6. Open `recipes/demo-supabase.html` in your browser (or push to GitHub Pages). The page demonstrates listing and adding recipes and tasks.
 
+7. To import the existing recipes from `recipes/recipes.json` into the `recipes` table, first extend the schema to hold the extra fields (category, notes, nutrition) and switch `instructions` to an array:
+
+```
+ALTER TABLE recipes
+  ADD COLUMN IF NOT EXISTS slug text UNIQUE,
+  ADD COLUMN IF NOT EXISTS category text,
+  ADD COLUMN IF NOT EXISTS notes text,
+  ADD COLUMN IF NOT EXISTS nutrition jsonb;
+
+ALTER TABLE recipes ALTER COLUMN instructions TYPE jsonb USING to_jsonb(instructions);
+```
+
+Then run the importer from your machine (never from the browser — it needs the `service_role` key, which must stay off the client):
+
+```
+export SUPABASE_URL=https://birzjhrysrjjvbyzsfoc.supabase.co
+export SUPABASE_SERVICE_ROLE_KEY=<service_role key from Supabase Settings → API>
+node recipes/import-recipes.mjs
+```
+
+The script upserts by `slug` (the recipe's `id` in the JSON), so it's safe to re-run after fixing data. Images aren't uploaded to storage — `image_path` is set to the recipe's existing GitHub Pages URL (e.g. `https://omgsharon.github.io/Life/recipes/images/<file>`), so the site keeps serving images straight from the repo.
+
 Security notes:
 - Never embed the `service_role` key in client-side code. Use serverless functions for privileged operations.
 - Monitor usage limits on the free tier and consider using image CDN (Cloudinary) or edge functions if you expect heavy traffic.
