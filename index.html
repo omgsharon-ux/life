@@ -62,7 +62,7 @@
             padding: 14px 20px;
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
         }
 
         .card-header h2 {
@@ -75,6 +75,62 @@
         }
 
         .card-body { padding: 20px; }
+
+        /* ── BUTTONS ── */
+        .btn-rose {
+            background: linear-gradient(135deg, #C9847A, #9E5D67);
+            color: #fff;
+            border: none;
+            border-radius: 30px;
+            padding: 8px 18px;
+            font-size: 18px;
+            cursor: pointer;
+            line-height: 1;
+            font-family: Georgia, serif;
+        }
+        .btn-rose:hover { background: linear-gradient(135deg, #9E5D67, #7D4E57); }
+
+        .btn-ghost {
+            background: rgba(255,255,255,0.25);
+            color: #fff;
+            border: 1px solid rgba(255,255,255,0.4);
+            border-radius: 20px;
+            padding: 5px 14px;
+            font-size: 12px;
+            cursor: pointer;
+            font-family: Georgia, serif;
+            white-space: nowrap;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .btn-ghost:hover { background: rgba(255,255,255,0.4); }
+
+        .btn-nav {
+            background: none;
+            border: 2px solid #E8B4B8;
+            color: #C9847A;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            font-size: 16px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .btn-nav:hover { background: #F4E0E0; }
+
+        .btn-delete {
+            background: none;
+            border: none;
+            color: #E8B4B8;
+            font-size: 18px;
+            cursor: pointer;
+            padding: 0 2px;
+            flex-shrink: 0;
+            line-height: 1;
+        }
+        .btn-delete:hover { color: #9E5D67; }
 
         /* ── TO DO ── */
         .todo-input-row {
@@ -94,37 +150,7 @@
             background: #FDF5F5;
             outline: none;
         }
-
         .todo-input-row input:focus { border-color: #C9847A; }
-
-        .btn-rose {
-            background: linear-gradient(135deg, #C9847A, #9E5D67);
-            color: #fff;
-            border: none;
-            border-radius: 30px;
-            padding: 8px 18px;
-            font-size: 18px;
-            cursor: pointer;
-            line-height: 1;
-            white-space: nowrap;
-            font-family: Georgia, serif;
-        }
-
-        .btn-rose:hover { background: linear-gradient(135deg, #9E5D67, #7D4E57); }
-
-        .btn-ghost {
-            background: rgba(255,255,255,0.25);
-            color: #fff;
-            border: 1px solid rgba(255,255,255,0.4);
-            border-radius: 20px;
-            padding: 5px 14px;
-            font-size: 12px;
-            cursor: pointer;
-            font-family: Georgia, serif;
-            white-space: nowrap;
-        }
-
-        .btn-ghost:hover { background: rgba(255,255,255,0.4); }
 
         #todo-list { list-style: none; }
 
@@ -135,7 +161,6 @@
             padding: 10px 0;
             border-bottom: 1px solid #F4E0E0;
         }
-
         #todo-list li:last-child { border-bottom: none; }
 
         #todo-list input[type="checkbox"] {
@@ -153,24 +178,7 @@
             line-height: 1.5;
             cursor: pointer;
         }
-
-        #todo-list li.done label {
-            text-decoration: line-through;
-            color: #C9A9A9;
-        }
-
-        .btn-delete {
-            background: none;
-            border: none;
-            color: #E8B4B8;
-            font-size: 18px;
-            cursor: pointer;
-            padding: 0 2px;
-            flex-shrink: 0;
-            line-height: 1;
-        }
-
-        .btn-delete:hover { color: #9E5D67; }
+        #todo-list li.done label { text-decoration: line-through; color: #C9A9A9; }
 
         .empty-msg {
             color: #C9A9A9;
@@ -179,7 +187,7 @@
             padding: 14px 0;
         }
 
-        /* ── MEAL PLANNER ── */
+        /* ── WEEK NAV ── */
         .week-nav {
             display: flex;
             align-items: center;
@@ -198,23 +206,7 @@
             letter-spacing: 0.03em;
         }
 
-        .btn-nav {
-            background: none;
-            border: 2px solid #E8B4B8;
-            color: #C9847A;
-            border-radius: 50%;
-            width: 30px;
-            height: 30px;
-            font-size: 16px;
-            cursor: pointer;
-            line-height: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .btn-nav:hover { background: #F4E0E0; }
-
+        /* ── MEAL GRID ── */
         .meal-grid {
             display: grid;
             grid-template-columns: repeat(7, 1fr);
@@ -238,11 +230,7 @@
             color: #9E5D67;
         }
 
-        .meal-day-date {
-            font-size: 10px;
-            color: #C9A9A9;
-            margin-top: 1px;
-        }
+        .meal-day-date { font-size: 10px; color: #C9A9A9; margin-top: 1px; }
 
         .meal-day.today .meal-day-name { color: #7D4E57; }
         .meal-day.today .meal-day-header { border-bottom-color: #9E5D67; }
@@ -276,7 +264,6 @@
             display: block;
             flex: 1;
         }
-
         .meal-recipe-name:hover { color: #9E5D67; text-decoration: underline; }
 
         .meal-slot-add {
@@ -289,7 +276,6 @@
             padding: 0;
             text-align: left;
         }
-
         .meal-slot-add:hover { color: #C9847A; }
 
         .meal-slot-clear {
@@ -301,7 +287,6 @@
             padding: 0;
             align-self: flex-end;
         }
-
         .meal-slot-clear:hover { color: #9E5D67; }
 
         .warn-badge {
@@ -314,10 +299,18 @@
             display: inline-block;
         }
 
+        /* ── SAVE STATUS ── */
+        .save-status {
+            font-size: 11px;
+            color: rgba(255,255,255,0.8);
+            transition: opacity 0.5s;
+        }
+        .save-status.hidden { opacity: 0; }
+
         /* ── DINNER HISTORY ── */
         .history-section {
             border-top: 1px solid #F0D5D5;
-            padding: 16px 20px;
+            padding: 14px 20px;
         }
 
         .history-toggle {
@@ -332,20 +325,12 @@
             align-items: center;
             gap: 6px;
         }
-
         .history-toggle:hover { color: #7D4E57; }
 
-        .history-grid {
-            display: none;
-            margin-top: 12px;
-            display: none;
-        }
-
+        .history-grid { display: none; margin-top: 12px; }
         .history-grid.open { display: block; }
 
-        .history-week {
-            margin-bottom: 10px;
-        }
+        .history-week { margin-bottom: 10px; }
 
         .history-week-label {
             font-size: 11px;
@@ -356,11 +341,7 @@
             margin-bottom: 4px;
         }
 
-        .history-dinners {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 6px;
-        }
+        .history-dinners { display: flex; flex-wrap: wrap; gap: 6px; }
 
         .history-pill {
             background: #F4E0E0;
@@ -380,7 +361,6 @@
             align-items: center;
             justify-content: center;
         }
-
         .modal-overlay.open { display: flex; }
 
         .modal {
@@ -400,6 +380,7 @@
             padding: 16px 20px;
             display: flex;
             align-items: center;
+            gap: 10px;
         }
 
         .modal-header h3 {
@@ -410,11 +391,7 @@
             flex: 1;
         }
 
-        .modal-header .slot-info {
-            color: rgba(255,255,255,0.8);
-            font-size: 12px;
-            margin-right: 12px;
-        }
+        .modal-header .slot-info { color: rgba(255,255,255,0.8); font-size: 12px; }
 
         .modal-close {
             background: rgba(255,255,255,0.25);
@@ -428,15 +405,10 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            line-height: 1;
         }
-
         .modal-close:hover { background: rgba(255,255,255,0.4); }
 
-        .modal-search {
-            padding: 12px 16px;
-            border-bottom: 1px solid #F0D5D5;
-        }
+        .modal-search { padding: 12px 16px; border-bottom: 1px solid #F0D5D5; }
 
         .modal-search input {
             width: 100%;
@@ -449,7 +421,6 @@
             background: #FDF5F5;
             outline: none;
         }
-
         .modal-search input:focus { border-color: #C9847A; }
 
         .modal-cats {
@@ -470,18 +441,13 @@
             color: #9E5D67;
             font-family: Georgia, serif;
         }
-
         .cat-pill.active, .cat-pill:hover {
             background: linear-gradient(135deg, #E8B4B8, #C9847A);
             color: #fff;
             border-color: transparent;
         }
 
-        .modal-list {
-            flex: 1;
-            overflow-y: auto;
-            padding: 8px 0;
-        }
+        .modal-list { flex: 1; overflow-y: auto; padding: 8px 0; }
 
         .recipe-option {
             padding: 10px 20px;
@@ -491,26 +457,12 @@
             gap: 10px;
             border-bottom: 1px solid #FDF5F5;
         }
-
         .recipe-option:hover { background: #FDF5F5; }
 
-        .recipe-option-name {
-            flex: 1;
-            font-size: 14px;
-            color: #4A2F35;
-        }
+        .recipe-option-name { flex: 1; font-size: 14px; color: #4A2F35; }
+        .recipe-option-cat { font-size: 11px; color: #C9A9A9; }
 
-        .recipe-option-cat {
-            font-size: 11px;
-            color: #C9A9A9;
-        }
-
-        .recipe-option .warn-badge { flex-shrink: 0; }
-
-        .modal-clear {
-            padding: 10px 20px;
-            border-top: 1px solid #F0D5D5;
-        }
+        .modal-clear { padding: 10px 20px; border-top: 1px solid #F0D5D5; }
 
         .modal-clear button {
             background: none;
@@ -522,7 +474,6 @@
             cursor: pointer;
             font-family: Georgia, serif;
         }
-
         .modal-clear button:hover { color: #9E5D67; border-color: #C9847A; }
 
         /* ── FOOTER ── */
@@ -535,10 +486,7 @@
         }
 
         /* ── RESPONSIVE ── */
-        @media (max-width: 1000px) {
-            main { grid-template-columns: 1fr; }
-        }
-
+        @media (max-width: 1000px) { main { grid-template-columns: 1fr; } }
         @media (max-width: 700px) {
             header h1 { font-size: 28px; }
             .meal-grid { grid-template-columns: repeat(4, 1fr); }
@@ -573,6 +521,7 @@
     <div class="card">
         <div class="card-header">
             <h2>Meal Planner</h2>
+            <span class="save-status hidden" id="save-status">Saved ✓</span>
             <a href="recipes/index.html" class="btn-ghost">Browse Recipes →</a>
             <button class="btn-ghost" onclick="archiveWeek()">Save Week</button>
         </div>
@@ -583,7 +532,6 @@
         </div>
         <div class="meal-grid" id="meal-grid"></div>
 
-        <!-- DINNER HISTORY -->
         <div class="history-section">
             <button class="history-toggle" onclick="toggleHistory()">
                 <span id="history-arrow">▶</span> Past 3 Weeks of Dinners
@@ -617,28 +565,25 @@
 
 <script>
 // ── CONSTANTS ──
-const DAYS_SHORT  = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
-const DAYS_LONG   = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
-const MONTHS      = ["January","February","March","April","May","June","July","August","September","October","November","December"];
-const MEALS       = ["Breakfast","Lunch","Dinner"];
-const HISTORY_KEY = "life-dinner-history";
+const DAYS_SHORT = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+const DAYS_LONG  = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+const MONTHS     = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+const MEALS      = ["Breakfast","Lunch","Dinner"];
 
 // ── DATE HEADER ──
 const today = new Date();
 today.setHours(0,0,0,0);
 document.getElementById("header-date").textContent =
-    DAYS_LONG[today.getDay()] + ", " + MONTHS[today.getMonth()] + " " + today.getDate() + ", " + today.getFullYear();
+    DAYS_LONG[today.getDay()] + ", " + MONTHS[today.getMonth()] + " " +
+    today.getDate() + ", " + today.getFullYear();
 
-// ── UTILS ──
-function dateKey(d) {
-    return d.toISOString().split("T")[0];
-}
+// ── DATE UTILS ──
+function dateKey(d) { return d.toISOString().split("T")[0]; }
 
 function getMonday(d) {
     const date = new Date(d);
     const day  = date.getDay();
-    const diff = day === 0 ? -6 : 1 - day;
-    date.setDate(date.getDate() + diff);
+    date.setDate(date.getDate() + (day === 0 ? -6 : 1 - day));
     date.setHours(0,0,0,0);
     return date;
 }
@@ -649,105 +594,123 @@ function addDays(d, n) {
     return date;
 }
 
-function formatShortDate(d) {
-    return (d.getMonth()+1) + "/" + d.getDate();
-}
-
 function formatWeekRange(monday) {
     const sunday = addDays(monday, 6);
     const sameMonth = monday.getMonth() === sunday.getMonth();
-    const start = MONTHS[monday.getMonth()] + " " + monday.getDate();
-    const end   = sameMonth ? sunday.getDate() : MONTHS[sunday.getMonth()] + " " + sunday.getDate();
-    return start + "–" + end + ", " + monday.getFullYear();
+    return MONTHS[monday.getMonth()] + " " + monday.getDate() + "–" +
+           (sameMonth ? "" : MONTHS[sunday.getMonth()] + " ") +
+           sunday.getDate() + ", " + monday.getFullYear();
 }
 
 // ── WEEK STATE ──
 let currentWeekStart = getMonday(today);
+let currentPlan      = {};   // in-memory cache for current week
+let dinnerHistory    = [];   // in-memory cache for history
 
-function shiftWeek(delta) {
-    currentWeekStart = addDays(currentWeekStart, delta * 7);
-    renderMealPlanner();
+// ── API CALLS ──
+async function fetchPlan(weekStart) {
+    try {
+        const res = await fetch(`/api/plan/${dateKey(weekStart)}`);
+        return res.ok ? await res.json() : {};
+    } catch { return {}; }
 }
 
-// ── PLAN STORAGE ──
-function planKey(weekStart) {
-    return "life-plan-" + dateKey(weekStart);
+async function postPlan(weekStart, plan) {
+    try {
+        await fetch(`/api/plan/${dateKey(weekStart)}`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(plan)
+        });
+        flashSaved();
+    } catch (e) { console.warn("Could not save plan:", e); }
 }
 
-function getPlan(weekStart) {
-    return JSON.parse(localStorage.getItem(planKey(weekStart)) || "{}");
+async function fetchHistory() {
+    try {
+        const res = await fetch("/api/history");
+        return res.ok ? await res.json() : [];
+    } catch { return []; }
 }
 
-function savePlan(weekStart, plan) {
-    localStorage.setItem(planKey(weekStart), JSON.stringify(plan));
+async function postHistory(history) {
+    try {
+        await fetch("/api/history", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(history)
+        });
+    } catch (e) { console.warn("Could not save history:", e); }
 }
 
-function getSlot(weekStart, dk, meal) {
-    const plan = getPlan(weekStart);
-    return (plan[dk] && plan[dk][meal]) || null;
+// ── SAVE INDICATOR ──
+let saveTimer;
+function flashSaved() {
+    const el = document.getElementById("save-status");
+    el.classList.remove("hidden");
+    clearTimeout(saveTimer);
+    saveTimer = setTimeout(() => el.classList.add("hidden"), 2000);
 }
 
-function setSlot(weekStart, dk, meal, recipe) {
-    const plan = getPlan(weekStart);
-    if (!plan[dk]) plan[dk] = {};
-    plan[dk][meal] = recipe; // {id, title} or null
-    savePlan(weekStart, plan);
+// ── SLOT ACCESS ──
+function getSlot(dk, meal) {
+    return (currentPlan[dk] && currentPlan[dk][meal]) || null;
+}
+
+async function setSlot(dk, meal, recipe) {
+    if (!currentPlan[dk]) currentPlan[dk] = {};
+    currentPlan[dk][meal] = recipe; // {id, title} or null
+    await postPlan(currentWeekStart, currentPlan);
 }
 
 // ── DINNER HISTORY ──
-function getDinnerHistory() {
-    return JSON.parse(localStorage.getItem(HISTORY_KEY) || "[]");
-}
-
-function saveDinnerHistory(history) {
-    localStorage.setItem(HISTORY_KEY, JSON.stringify(history));
-}
-
 function isRecentDinner(recipeId) {
     const cutoff = new Date(today);
     cutoff.setDate(cutoff.getDate() - 21);
-    return getDinnerHistory().some(h => h.recipeId === recipeId && new Date(h.date) >= cutoff);
+    return dinnerHistory.some(h => h.recipeId === recipeId && new Date(h.date) >= cutoff);
 }
 
-function archiveWeek() {
-    const plan = getPlan(currentWeekStart);
-    const history = getDinnerHistory();
+async function archiveWeek() {
     const weekKey = dateKey(currentWeekStart);
-
-    // Remove any existing entries for this week to avoid dupes
-    const filtered = history.filter(h => !h.weekKey || h.weekKey !== weekKey);
+    const filtered = dinnerHistory.filter(h => h.weekKey !== weekKey);
 
     let count = 0;
     for (let i = 0; i < 7; i++) {
-        const dk = dateKey(addDays(currentWeekStart, i));
-        const dinner = plan[dk] && plan[dk]["Dinner"];
+        const dk     = dateKey(addDays(currentWeekStart, i));
+        const dinner = getSlot(dk, "Dinner");
         if (dinner) {
             filtered.push({ date: dk, weekKey, recipeId: dinner.id, recipeName: dinner.title });
             count++;
         }
     }
 
-    saveDinnerHistory(filtered);
+    dinnerHistory = filtered;
+    await postHistory(dinnerHistory);
     renderHistory();
     alert(count > 0
         ? `✓ ${count} dinner${count > 1 ? "s" : ""} saved to history!`
         : "No dinners were planned for this week.");
 }
 
+// ── WEEK NAVIGATION ──
+async function shiftWeek(delta) {
+    currentWeekStart = addDays(currentWeekStart, delta * 7);
+    currentPlan      = await fetchPlan(currentWeekStart);
+    renderMealPlanner();
+}
+
 // ── RECIPES CACHE ──
-let allRecipes = [];
-let modalMealKey = null; // { weekStart, dk, meal }
+let allRecipes    = [];
+let modalSlotInfo = null;   // { dk, meal }
 let modalActiveCat = "All";
 
 async function loadRecipes() {
     if (allRecipes.length > 0) return;
     try {
-        const res = await fetch("recipes/recipes.json");
+        const res  = await fetch("recipes/recipes.json");
         allRecipes = await res.json();
-        allRecipes.sort((a, b) => a.title.localeCompare(b.title));
-    } catch(e) {
-        console.error("Could not load recipes.json", e);
-    }
+        allRecipes.sort((a,b) => a.title.localeCompare(b.title));
+    } catch(e) { console.error("Could not load recipes:", e); }
 }
 
 // ── MEAL PLANNER RENDER ──
@@ -758,30 +721,28 @@ function renderMealPlanner() {
     grid.innerHTML = "";
 
     for (let i = 0; i < 7; i++) {
-        const date = addDays(currentWeekStart, i);
-        const dk   = dateKey(date);
+        const date    = addDays(currentWeekStart, i);
+        const dk      = dateKey(date);
         const isToday = dk === dateKey(today);
 
         const col = document.createElement("div");
         col.className = "meal-day" + (isToday ? " today" : "");
 
-        // Day header
-        const hdr = document.createElement("div");
-        hdr.className = "meal-day-header";
-        hdr.innerHTML = `
-            <div class="meal-day-name">${isToday ? "Today" : DAYS_SHORT[date.getDay()]}</div>
-            <div class="meal-day-date">${formatShortDate(date)}</div>
+        col.innerHTML = `
+            <div class="meal-day-header">
+                <div class="meal-day-name">${isToday ? "Today" : DAYS_SHORT[date.getDay()]}</div>
+                <div class="meal-day-date">${(date.getMonth()+1)}/${date.getDate()}</div>
+            </div>
         `;
-        col.appendChild(hdr);
 
         MEALS.forEach(meal => {
-            const recipe = getSlot(currentWeekStart, dk, meal);
-            const slot = document.createElement("div");
+            const recipe = getSlot(dk, meal);
+            const slot   = document.createElement("div");
             slot.className = "meal-slot";
 
             const lbl = document.createElement("div");
-            lbl.className = "meal-slot-label";
-            lbl.textContent = meal[0]; // B / L / D
+            lbl.className    = "meal-slot-label";
+            lbl.textContent  = meal[0]; // B / L / D
 
             const content = document.createElement("div");
             content.className = "meal-slot-content";
@@ -789,35 +750,34 @@ function renderMealPlanner() {
             if (recipe) {
                 const link = document.createElement("a");
                 link.className = "meal-recipe-name";
-                link.href = `recipes/recipe.html?id=${encodeURIComponent(recipe.id)}`;
-                link.target = "_blank";
+                link.href      = `recipes/recipe.html?id=${encodeURIComponent(recipe.id)}`;
+                link.target    = "_blank";
                 link.textContent = recipe.title;
                 content.appendChild(link);
 
                 const clr = document.createElement("button");
-                clr.className = "meal-slot-clear";
+                clr.className   = "meal-slot-clear";
                 clr.textContent = "×";
-                clr.title = "Remove";
-                clr.addEventListener("click", () => {
-                    setSlot(currentWeekStart, dk, meal, null);
+                clr.title       = "Remove";
+                clr.addEventListener("click", async () => {
+                    await setSlot(dk, meal, null);
                     renderMealPlanner();
                 });
                 content.appendChild(clr);
             } else {
                 const add = document.createElement("button");
-                add.className = "meal-slot-add";
+                add.className   = "meal-slot-add";
                 add.textContent = "+ add";
-                add.addEventListener("click", () => openModal(currentWeekStart, dk, meal));
+                add.addEventListener("click", () => openModal(dk, meal));
                 content.appendChild(add);
             }
 
             slot.appendChild(lbl);
             slot.appendChild(content);
 
-            // Warn if dinner was used recently
             if (meal === "Dinner" && recipe && isRecentDinner(recipe.id)) {
                 const warn = document.createElement("span");
-                warn.className = "warn-badge";
+                warn.className   = "warn-badge";
                 warn.textContent = "⚠ recent";
                 slot.appendChild(warn);
             }
@@ -834,44 +794,36 @@ function renderMealPlanner() {
 // ── HISTORY PANEL ──
 function renderHistory() {
     const container = document.getElementById("history-grid");
-    const history   = getDinnerHistory();
 
-    if (history.length === 0) {
+    if (dinnerHistory.length === 0) {
         container.innerHTML = '<p class="empty-msg" style="margin-top:8px">No archived dinners yet.</p>';
         return;
     }
 
-    // Group by weekKey and only show last 3 weeks
     const weeks = {};
-    history.forEach(h => {
+    dinnerHistory.forEach(h => {
         const wk = h.weekKey || h.date.slice(0,7);
         if (!weeks[wk]) weeks[wk] = [];
         weeks[wk].push(h);
     });
 
     const sortedWeeks = Object.keys(weeks).sort().reverse().slice(0, 3);
-
     container.innerHTML = "";
-    sortedWeeks.forEach(wk => {
-        const weekDiv = document.createElement("div");
-        weekDiv.className = "history-week";
 
-        const monday = new Date(wk + "-01");
-        // Use actual dates from the entries instead
+    sortedWeeks.forEach(wk => {
         const entries = weeks[wk];
         const minDate = entries.reduce((a,b) => a.date < b.date ? a : b).date;
         const maxDate = entries.reduce((a,b) => a.date > b.date ? a : b).date;
 
-        const lbl = document.createElement("div");
-        lbl.className = "history-week-label";
-        lbl.textContent = "Week of " + minDate + " – " + maxDate;
-        weekDiv.appendChild(lbl);
+        const weekDiv = document.createElement("div");
+        weekDiv.className = "history-week";
+        weekDiv.innerHTML = `<div class="history-week-label">Week of ${minDate} – ${maxDate}</div>`;
 
         const pills = document.createElement("div");
         pills.className = "history-dinners";
         entries.forEach(e => {
             const pill = document.createElement("span");
-            pill.className = "history-pill";
+            pill.className   = "history-pill";
             pill.textContent = e.recipeName;
             pills.appendChild(pill);
         });
@@ -889,44 +841,39 @@ function toggleHistory() {
 }
 
 // ── MODAL ──
-async function openModal(weekStart, dk, meal) {
-    modalMealKey   = { weekStart, dk, meal };
+async function openModal(dk, meal) {
+    modalSlotInfo  = { dk, meal };
     modalActiveCat = "All";
+
+    const date = new Date(dk + "T00:00:00");
     document.getElementById("modal-slot-info").textContent =
-        DAYS_LONG[new Date(dk).getDay()] + " · " + meal;
+        DAYS_LONG[date.getDay()] + " · " + meal;
     document.getElementById("modal-search").value = "";
 
     await loadRecipes();
     buildCatPills();
     filterRecipes();
-
     document.getElementById("modal").classList.add("open");
     document.getElementById("modal-search").focus();
 }
 
 function closeModal() {
     document.getElementById("modal").classList.remove("open");
-    modalMealKey = null;
+    modalSlotInfo = null;
 }
 
 document.getElementById("modal").addEventListener("click", e => {
     if (e.target === document.getElementById("modal")) closeModal();
 });
-
-document.addEventListener("keydown", e => {
-    if (e.key === "Escape") closeModal();
-});
+document.addEventListener("keydown", e => { if (e.key === "Escape") closeModal(); });
 
 function buildCatPills() {
-    const cats = ["All", ...new Set(allRecipes.map(r => r.category || "Other").filter(Boolean)).values()].sort((a,b) => {
-        if (a==="All") return -1; if (b==="All") return 1; return a.localeCompare(b);
-    });
-
+    const cats = ["All", ...[...new Set(allRecipes.map(r => r.category || "Other"))].sort()];
     const container = document.getElementById("modal-cats");
     container.innerHTML = "";
     cats.forEach(cat => {
         const btn = document.createElement("button");
-        btn.className = "cat-pill" + (cat === modalActiveCat ? " active" : "");
+        btn.className   = "cat-pill" + (cat === modalActiveCat ? " active" : "");
         btn.textContent = cat;
         btn.addEventListener("click", () => {
             modalActiveCat = cat;
@@ -939,16 +886,12 @@ function buildCatPills() {
 }
 
 function filterRecipes() {
-    const query = document.getElementById("modal-search").value.trim().toLowerCase();
-    const isDinner = modalMealKey && modalMealKey.meal === "Dinner";
+    const query    = document.getElementById("modal-search").value.trim().toLowerCase();
+    const isDinner = modalSlotInfo && modalSlotInfo.meal === "Dinner";
 
     let pool = allRecipes;
-    if (modalActiveCat !== "All") {
-        pool = pool.filter(r => (r.category || "Other") === modalActiveCat);
-    }
-    if (query) {
-        pool = pool.filter(r => r.title.toLowerCase().includes(query) || (r.category||"").toLowerCase().includes(query));
-    }
+    if (modalActiveCat !== "All") pool = pool.filter(r => (r.category||"Other") === modalActiveCat);
+    if (query) pool = pool.filter(r => r.title.toLowerCase().includes(query) || (r.category||"").toLowerCase().includes(query));
 
     const list = document.getElementById("modal-list");
     list.innerHTML = "";
@@ -959,16 +902,16 @@ function filterRecipes() {
     }
 
     pool.forEach(recipe => {
-        const div = document.createElement("div");
+        const div  = document.createElement("div");
         div.className = "recipe-option";
         div.addEventListener("click", () => selectRecipe(recipe));
 
         const name = document.createElement("span");
-        name.className = "recipe-option-name";
+        name.className   = "recipe-option-name";
         name.textContent = recipe.title;
 
         const cat = document.createElement("span");
-        cat.className = "recipe-option-cat";
+        cat.className   = "recipe-option-cat";
         cat.textContent = recipe.category || "";
 
         div.appendChild(name);
@@ -976,7 +919,7 @@ function filterRecipes() {
 
         if (isDinner && isRecentDinner(recipe.id)) {
             const warn = document.createElement("span");
-            warn.className = "warn-badge";
+            warn.className   = "warn-badge";
             warn.textContent = "⚠ used recently";
             div.appendChild(warn);
         }
@@ -985,15 +928,15 @@ function filterRecipes() {
     });
 }
 
-function selectRecipe(recipe) {
-    if (!modalMealKey) return;
-    const { weekStart, dk, meal } = modalMealKey;
-    setSlot(weekStart, dk, meal, recipe ? { id: recipe.id, title: recipe.title } : null);
+async function selectRecipe(recipe) {
+    if (!modalSlotInfo) return;
+    const { dk, meal } = modalSlotInfo;
+    await setSlot(dk, meal, recipe ? { id: recipe.id, title: recipe.title } : null);
     renderMealPlanner();
     closeModal();
 }
 
-// ── TO DO ──
+// ── TO DO (stays in localStorage — personal/quick notes) ──
 const todoInput = document.getElementById("todo-input");
 const todoList  = document.getElementById("todo-list");
 const todoEmpty = document.getElementById("todo-empty");
@@ -1007,23 +950,23 @@ function saveTodos() {
 }
 
 function renderTodo(text, done = false) {
-    const li  = document.createElement("li");
+    const li = document.createElement("li");
     li.dataset.text = text;
     if (done) li.classList.add("done");
 
     const uid = "td-" + Date.now() + Math.random();
     const cb  = document.createElement("input");
-    cb.type   = "checkbox";
-    cb.id     = uid;
+    cb.type    = "checkbox";
+    cb.id      = uid;
     cb.checked = done;
     cb.addEventListener("change", () => { li.classList.toggle("done", cb.checked); saveTodos(); });
 
     const lbl = document.createElement("label");
-    lbl.htmlFor   = uid;
+    lbl.htmlFor     = uid;
     lbl.textContent = text;
 
     const del = document.createElement("button");
-    del.className = "btn-delete";
+    del.className   = "btn-delete";
     del.textContent = "×";
     del.addEventListener("click", () => {
         li.remove();
@@ -1055,7 +998,13 @@ todoInput.addEventListener("keydown", e => { if (e.key === "Enter") addTodo(); }
 })();
 
 // ── INIT ──
-renderMealPlanner();
+(async function init() {
+    [currentPlan, dinnerHistory] = await Promise.all([
+        fetchPlan(currentWeekStart),
+        fetchHistory()
+    ]);
+    renderMealPlanner();
+})();
 </script>
 
 </body>

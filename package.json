@@ -1,0 +1,12 @@
+{
+  "name": "life-dashboard",
+  "version": "1.0.0",
+  "description": "Life Dashboard with Recipes and Meal Planner",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
