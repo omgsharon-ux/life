@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Life Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Georgia, "Times New Roman", serif;
+            background-color: #FDF5F5;
+            color: #4A2F35;
+            min-height: 100vh;
+        }
+
+        /* ── HEADER ── */
+        header {
+            background: linear-gradient(135deg, #E8B4B8 0%, #C9847A 50%, #9E5D67 100%);
+            padding: 36px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 4px 16px rgba(158, 93, 103, 0.25);
+            position: relative;
+        }
+
+        header h1 {
+            font-size: 42px;
+            font-weight: normal;
+            letter-spacing: 0.1em;
+            color: #fff;
+            text-shadow: 0 2px 8px rgba(74, 47, 53, 0.3);
+        }
+
+        header .date {
+            color: rgba(255,255,255,0.85);
+            font-size: 16px;
+            letter-spacing: 0.05em;
+        }
+
+        /* ── MAIN LAYOUT ── */
+        main {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 36px 32px 60px;
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 32px;
+            align-items: start;
+        }
+
+        /* ── CARD ── */
+        .card {
+            background: #fff;
+            border-radius: 14px;
+            box-shadow: 0 2px 16px rgba(201, 132, 122, 0.12);
+            overflow: hidden;
+        }
+
+        .card-header {
+            background: linear-gradient(135deg, #E8B4B8 0%, #C9847A 100%);
+            padding: 16px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .card-header h2 {
+            color: #fff;
+            font-size: 20px;
+            font-weight: normal;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+        }
+
+        .card-body {
+            padding: 24px;
+        }
+
+        /* ── TO DO LIST ── */
+        .todo-input-row {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .todo-input-row input {
+            flex: 1;
+            padding: 10px 14px;
+            border: 2px solid #E8B4B8;
+            border-radius: 30px;
+            font-size: 15px;
+            font-family: Georgia, serif;
+            color: #4A2F35;
+            background: #FDF5F5;
+            outline: none;
+        }
+
+        .todo-input-row input:focus {
+            border-color: #C9847A;
+        }
+
+        .btn-add {
+            background: linear-gradient(135deg, #C9847A, #9E5D67);
+            color: #fff;
+            border: none;
+            border-radius: 30px;
+            padding: 10px 20px;
+            font-size: 20px;
+            cursor: pointer;
+            line-height: 1;
+        }
+
+        .btn-add:hover {
+            background: linear-gradient(135deg, #9E5D67, #7D4E57);
+        }
+
+        #todo-list {
+            list-style: none;
+        }
+
+        #todo-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 12px 0;
+            border-bottom: 1px solid #F4E0E0;
+        }
+
+        #todo-list li:last-child {
+            border-bottom: none;
+        }
+
+        #todo-list input[type="checkbox"] {
+            accent-color: #C9847A;
+            width: 18px;
+            height: 18px;
+            margin-top: 2px;
+            flex-shrink: 0;
+            cursor: pointer;
+        }
+
+        #todo-list label {
+            flex: 1;
+            font-size: 15px;
+            line-height: 1.5;
+            cursor: pointer;
+        }
+
+        #todo-list li.done label {
+            text-decoration: line-through;
+            color: #C9A9A9;
+        }
+
+        .btn-delete {
+            background: none;
+            border: none;
+            color: #E8B4B8;
+            font-size: 18px;
+            cursor: pointer;
+            line-height: 1;
+            padding: 0 4px;
+            flex-shrink: 0;
+        }
+
+        .btn-delete:hover {
+            color: #9E5D67;
+        }
+
+        .todo-empty {
+            color: #C9A9A9;
+            font-size: 14px;
+            text-align: center;
+            padding: 16px 0;
+        }
+
+        /* ── MEAL PLANNER ── */
+        .meal-browse-link {
+            color: #fff;
+            font-size: 13px;
+            text-decoration: none;
+            background: rgba(255,255,255,0.25);
+            padding: 4px 12px;
+            border-radius: 20px;
+            letter-spacing: 0.03em;
+        }
+
+        .meal-browse-link:hover {
+            background: rgba(255,255,255,0.4);
+        }
+
+        .meal-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 10px;
+        }
+
+        .meal-day {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .meal-day-name {
+            text-align: center;
+            font-size: 13px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: #9E5D67;
+            padding-bottom: 6px;
+            border-bottom: 2px solid #E8B4B8;
+        }
+
+        .meal-slot {
+            background: #FDF5F5;
+            border: 1px solid #F0D5D5;
+            border-radius: 8px;
+            padding: 6px 8px;
+            min-height: 60px;
+            font-size: 12px;
+        }
+
+        .meal-slot-label {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #C9847A;
+            margin-bottom: 4px;
+            font-weight: bold;
+        }
+
+        .meal-slot-input {
+            width: 100%;
+            background: none;
+            border: none;
+            font-size: 12px;
+            font-family: Georgia, serif;
+            color: #4A2F35;
+            resize: none;
+            outline: none;
+            line-height: 1.4;
+        }
+
+        .meal-slot-input::placeholder {
+            color: #D4AFAF;
+        }
+
+        /* ── FOOTER ── */
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #C9A9A9;
+            font-size: 13px;
+            border-top: 1px solid #F0D5D5;
+        }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 900px) {
+            main {
+                grid-template-columns: 1fr;
+            }
+
+            .meal-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        @media (max-width: 600px) {
+            header h1 {
+                font-size: 28px;
+            }
+
+            .meal-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Life Dashboard</h1>
+    <div class="date" id="header-date"></div>
+</header>
+
+<main>
+
+    <!-- TO DO LIST -->
+    <div class="card">
+        <div class="card-header">
+            <h2>To Do</h2>
+        </div>
+        <div class="card-body">
+            <div class="todo-input-row">
+                <input type="text" id="todo-input" placeholder="Add a task…" />
+                <button class="btn-add" onclick="addTodo()">+</button>
+            </div>
+            <ul id="todo-list"></ul>
+            <p class="todo-empty" id="todo-empty">No tasks yet.</p>
+        </div>
+    </div>
+
+    <!-- MEAL PLANNER -->
+    <div class="card">
+        <div class="card-header">
+            <h2>Meal Planner</h2>
+            <a href="recipes/index.html" class="meal-browse-link">Browse Recipes →</a>
+        </div>
+        <div class="card-body">
+            <div class="meal-grid" id="meal-grid"></div>
+        </div>
+    </div>
+
+</main>
+
+<footer>
+    Powered by ☕ & 🌹
+</footer>
+
+<script>
+// ── DATE ──
+const days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+const months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+const now = new Date();
+document.getElementById("header-date").textContent =
+    days[now.getDay()] + ", " + months[now.getMonth()] + " " + now.getDate() + ", " + now.getFullYear();
+
+// ── TO DO ──
+const todoInput = document.getElementById("todo-input");
+const todoList  = document.getElementById("todo-list");
+const todoEmpty = document.getElementById("todo-empty");
+
+function saveTodos() {
+    const items = [];
+    todoList.querySelectorAll("li").forEach(li => {
+        items.push({ text: li.dataset.text, done: li.classList.contains("done") });
+    });
+    localStorage.setItem("life-todos", JSON.stringify(items));
+}
+
+function renderTodo(text, done = false) {
+    const li = document.createElement("li");
+    li.dataset.text = text;
+    if (done) li.classList.add("done");
+
+    const id = "todo-" + Date.now() + Math.random();
+
+    const cb = document.createElement("input");
+    cb.type = "checkbox";
+    cb.id = id;
+    cb.checked = done;
+    cb.addEventListener("change", () => {
+        li.classList.toggle("done", cb.checked);
+        saveTodos();
+    });
+
+    const label = document.createElement("label");
+    label.htmlFor = id;
+    label.textContent = text;
+
+    const del = document.createElement("button");
+    del.className = "btn-delete";
+    del.textContent = "×";
+    del.addEventListener("click", () => {
+        li.remove();
+        todoEmpty.style.display = todoList.children.length === 0 ? "block" : "none";
+        saveTodos();
+    });
+
+    li.appendChild(cb);
+    li.appendChild(label);
+    li.appendChild(del);
+    todoList.appendChild(li);
+    todoEmpty.style.display = "none";
+}
+
+function addTodo() {
+    const text = todoInput.value.trim();
+    if (!text) return;
+    renderTodo(text);
+    saveTodos();
+    todoInput.value = "";
+}
+
+todoInput.addEventListener("keydown", e => { if (e.key === "Enter") addTodo(); });
+
+(function loadTodos() {
+    const saved = JSON.parse(localStorage.getItem("life-todos") || "[]");
+    saved.forEach(item => renderTodo(item.text, item.done));
+    todoEmpty.style.display = saved.length === 0 ? "block" : "none";
+})();
+
+// ── MEAL PLANNER ──
+const shortDays = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+const meals = ["Breakfast","Lunch","Dinner"];
+const grid = document.getElementById("meal-grid");
+const todayIndex = now.getDay();
+
+// Build 7 columns starting from today
+for (let i = 0; i < 7; i++) {
+    const dayIndex = (todayIndex + i) % 7;
+    const col = document.createElement("div");
+    col.className = "meal-day";
+
+    const dayName = document.createElement("div");
+    dayName.className = "meal-day-name";
+    dayName.textContent = i === 0 ? "Today" : shortDays[dayIndex];
+    col.appendChild(dayName);
+
+    meals.forEach(meal => {
+        const slot = document.createElement("div");
+        slot.className = "meal-slot";
+
+        const lbl = document.createElement("div");
+        lbl.className = "meal-slot-label";
+        lbl.textContent = meal;
+
+        const storageKey = `meal-${dayIndex}-${meal}`;
+        const input = document.createElement("textarea");
+        input.className = "meal-slot-input";
+        input.rows = 2;
+        input.placeholder = "—";
+        input.value = localStorage.getItem(storageKey) || "";
+        input.addEventListener("input", () => localStorage.setItem(storageKey, input.value));
+
+        slot.appendChild(lbl);
+        slot.appendChild(input);
+        col.appendChild(slot);
+    });
+
+    grid.appendChild(col);
+}
+</script>
+
+</body>
+</html>
