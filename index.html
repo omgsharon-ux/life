@@ -32,10 +32,21 @@
             text-shadow: 0 2px 8px rgba(74,47,53,0.3);
         }
 
+        .header-right {
+            text-align: right;
+        }
+
         header .date {
             color: rgba(255,255,255,0.85);
             font-size: 16px;
             letter-spacing: 0.05em;
+        }
+
+        header .clock {
+            color: rgba(255,255,255,0.75);
+            font-size: 22px;
+            letter-spacing: 0.08em;
+            margin-top: 4px;
         }
 
         /* ── MAIN LAYOUT ── */
@@ -497,7 +508,10 @@
 
 <header>
     <h1>Life Dashboard</h1>
-    <div class="date" id="header-date"></div>
+    <div class="header-right">
+        <div class="date" id="header-date"></div>
+        <div class="clock" id="header-clock"></div>
+    </div>
 </header>
 
 <main>
@@ -576,6 +590,18 @@ today.setHours(0,0,0,0);
 document.getElementById("header-date").textContent =
     DAYS_LONG[today.getDay()] + ", " + MONTHS[today.getMonth()] + " " +
     today.getDate() + ", " + today.getFullYear();
+
+function updateClock() {
+    const now = new Date();
+    const h   = now.getHours();
+    const m   = String(now.getMinutes()).padStart(2, "0");
+    const s   = String(now.getSeconds()).padStart(2, "0");
+    const ampm = h >= 12 ? "PM" : "AM";
+    const hour = h % 12 || 12;
+    document.getElementById("header-clock").textContent = `${hour}:${m}:${s} ${ampm}`;
+}
+updateClock();
+setInterval(updateClock, 1000);
 
 // ── DATE UTILS ──
 function dateKey(d) {
